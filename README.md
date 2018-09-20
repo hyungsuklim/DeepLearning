@@ -1,2 +1,2 @@
 # DeepLearning
-SNU DeepLearning Lecture Assignment &amp; Project
+SNU Deep Learning Course Assignment &amp; Project
