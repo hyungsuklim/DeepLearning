@@ -34,7 +34,7 @@ class Captioning():
     def build_model(self):
          with tf.Graph().as_default() as self.graph:
             #loss = 0
-            self.global_step_tensor = tf.contrib.framework.get_or_create_global_step()
+            self.global_step_tensor = tf.train.get_or_create_global_step()
  
             if self.is_training:
                 self.img_features = tf.placeholder(tf.float32, shape=[self.batch_size, self.dim_features]) # img_features
@@ -47,17 +47,7 @@ class Captioning():
                 self.batch_size = 1
             
             
-            # IMAGE EMBEDDING
-            '''
-            with tf.variable_scope("image_embedding") as scope:
-                self.image_embedding = tf.contrib.layers.fully_connected(
-                                            inputs=self.img_features,
-                                            num_outputs = self.embedding_size,
-                                            activation_fn = None,
-                                            weights_initializer = self.initializer,
-                                            biases_initializer = None,
-                                            scope = scope)
-            '''                              
+            # IMAGE EMBEDDING                             
             self.image_embeddings = self.img_features #self.image_embedding # NEW IMAGE EMBEDDINGS
             # (500, 512)
             
@@ -71,7 +61,7 @@ class Captioning():
             # (500, 16, 512)
             
             
-            # LSTM MODEL
+            # LSTM MODEL with dropout
             self.lstm_cell = tf.contrib.rnn.BasicLSTMCell(num_units = self.n_hidden, state_is_tuple = True);
             
             if self.is_training is True:
