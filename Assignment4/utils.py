@@ -28,7 +28,7 @@ class TextLoader():
             print("loading preprocessed files")
             self.load_preprocessed(vocab_file, tensor_file)
         self.create_batches()
-        self.reset_batch_pointer()
+        self.reset_pointer()
 
     # preprocess data for the first time.
     def preprocess(self, input_file, vocab_file, tensor_file):
@@ -82,7 +82,7 @@ class TextLoader():
         self.pointer += 1
         return x, y
 
-    def reset_batch_pointer(self):
+    def reset_pointer(self):
         self.pointer = 0
 
 def getNext_batch(input , data_y , batch_num, batch_size):
@@ -255,6 +255,7 @@ def sample_label_face(num):
             label_vector[i,2]=-2
     '''
     return label_vector
+
 
 # An alternative to tf.nn.rnn_cell._linear function, which has been removed in Tensorfow 1.0.1
 # The highway layer is borrowed from https://github.com/mkroutikov/tf-lstm-char-cnn
