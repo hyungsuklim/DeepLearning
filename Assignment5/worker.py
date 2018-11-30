@@ -12,6 +12,13 @@ from a3c import A3C
 from envs import create_env
 import distutils.version
 
+# Disables write_meta_graph argument, which freezes entire process and is mostly useless.
+class FastSaver(tf.train.Saver):
+    def save(self, sess, save_path, global_step=None, latest_filename=None,
+             meta_graph_suffix="meta", write_meta_graph=True):
+        super(FastSaver, self).save(sess, save_path, global_step, latest_filename,
+                                    meta_graph_suffix, False)
+
 
 def run(args, server):
     env = create_env(args.env_id, client_id=str(args.task), remotes=args.remotes)
